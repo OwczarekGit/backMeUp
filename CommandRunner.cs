@@ -29,7 +29,7 @@ namespace backMeUp
 
         public static CommandOutput watchFile(string path)
         {
-            return run($"inotifywait -e modify {path}");
+            return run($"inotifywait -e close_write {path}");
         }
     }
 }
