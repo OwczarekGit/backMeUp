@@ -5,20 +5,23 @@ using System.Collections.Generic;
 using System.IO;
 using backMeUp;
 
-List<WatchedFile> watchedFiles = new List<WatchedFile>();
+List<Watched> watchTargets = new List<Watched>();
 
 foreach (var arg in args)
 {
-    if (!File.Exists(arg))
+    if (!File.Exists(arg) && !Directory.Exists(arg))
         continue;
 
-    watchedFiles.Add(new WatchedFile(arg));
+    if (Utils.isFile(arg))
+        watchTargets.Add(new WatchedFile(arg));
+    else
+        watchTargets.Add(new WatchedDirectory(arg));
 }
 
-foreach (var watchedFile in watchedFiles)
-    watchedFile.start();
+foreach (var watched in watchTargets)
+    watched.start();
 
-Console.WriteLine($"Watching for {watchedFiles.Count} files.");
+Console.WriteLine($"Watching for {watchTargets.Count} files.");
 
 Console.WriteLine("Press SHIFT+Q to stop.");
 var input = Console.ReadKey(true);
@@ -27,5 +30,5 @@ while (input.Key != ConsoleKey.Q && (input.Modifiers & ConsoleModifiers.Shift) !
     input = Console.ReadKey(true);
 }
 
-foreach (var watchedFile in watchedFiles)
-    watchedFile.worker.Interrupt();
+foreach (var watched in watchTargets)
+    watched.worker.Interrupt();

@@ -31,5 +31,10 @@ namespace backMeUp
         {
             return run($"inotifywait -e close_write {path}");
         }
+
+        public static CommandOutput compressDirectory(string path, string archiveName)
+        {
+            return run($"tar czf {archiveName}.tar.gz {path}");
+        }
     }
 }

@@ -3,9 +3,9 @@ using System.Threading;
 
 namespace backMeUp
 {
-    public class WatchedFile : Watched
+    public class WatchedDirectory : Watched
     {
-        public WatchedFile(string path) : base(path) {}
+        public WatchedDirectory(string path) : base(path) {}
 
         protected override void watch()
         {
@@ -14,10 +14,10 @@ namespace backMeUp
             while (true)
             {
                 var output = CommandRunner.watchFile(targetPath);
-                Console.WriteLine($"File {targetPath} changed for the {changeCount++} time. Backing up…");
+                Console.WriteLine($"Directory {targetPath} changed for the {changeCount++} time. Backing up…");
                 Thread.Sleep(8000);
-                Backup.backupFile(targetPath);
-                Console.WriteLine($"File {targetPath} backed up successfully!");
+                Backup.backupDirectory(targetPath);
+                Console.WriteLine($"Directory {targetPath} backed up successfully!");
             }
         }
     }
