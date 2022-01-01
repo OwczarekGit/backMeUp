@@ -55,7 +55,7 @@ namespace backMeUp
             var compressed = CommandRunner.compressDirectory(path, archiveName);
 
             if (compressed.success())
-                File.Move(archiveName, $"{BACKUP_DIR}/{archiveName}");
+                File.Move($"{archiveName}.tar.gz", $"{BACKUP_DIR}/{archiveName}.tar.gz");
 
             return true;
         }
